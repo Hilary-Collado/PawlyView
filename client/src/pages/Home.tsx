@@ -1,0 +1,369 @@
+import { Navigation } from "@/components/Navigation";
+import { ServiceCard } from "@/components/ServiceCard";
+import { ProductCard } from "@/components/ProductCard";
+import { useServices, useProducts, useTestimonials, useTeam } from "@/hooks/use-pawly";
+import { Button } from "@/components/ui/button";
+import { 
+  Stethoscope, 
+  Scissors, 
+  Hotel, 
+  ShoppingBag, 
+  Heart, 
+  MapPin, 
+  Phone, 
+  Clock, 
+  MessageCircle,
+  Star,
+  PawPrint
+} from "lucide-react";
+import { motion } from "framer-motion";
+
+export default function Home() {
+  const { data: services } = useServices();
+  const { data: products } = useProducts();
+  const { data: testimonials } = useTestimonials();
+  const { data: team } = useTeam();
+
+  // Mocks for fallback if API empty (for demo purposes)
+  const defaultServices = [
+    { title: "Veterinaria", description: "Consultas, vacunas y cirugías con los mejores especialistas.", icon: Stethoscope },
+    { title: "Peluquería", description: "Baños, cortes y spa para que tu mascota luzca increíble.", icon: Scissors },
+    { title: "Hotel", description: "Hospedaje seguro y divertido con supervisión 24/7.", icon: Hotel },
+    { title: "Tienda", description: "Alimentos premium, juguetes y accesorios exclusivos.", icon: ShoppingBag },
+  ];
+
+  const benefits = [
+    "Supervisión veterinaria 24 horas",
+    "Habitaciones climatizadas y cómodas",
+    "Áreas de juego y socialización",
+    "Reportes diarios con fotos y videos"
+  ];
+
+  return (
+    <div className="min-h-screen bg-background font-sans selection:bg-primary/20">
+      <Navigation />
+
+      {/* HERO SECTION */}
+      <section id="home" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/40 -z-10" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent rounded-l-full -z-10 blur-3xl" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="flex-1 text-center lg:text-left space-y-8">
+              <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-primary/10 mb-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <Heart className="text-primary w-4 h-4 fill-primary" />
+                <span className="text-sm font-semibold text-primary-foreground/80 tracking-wide uppercase">Amor incondicional</span>
+              </div>
+              
+              <h1 className="text-5xl lg:text-7xl font-display font-bold leading-tight text-foreground text-balance">
+                La clínica veterinaria <span className="text-primary bg-primary/10 px-4 rounded-xl inline-block -rotate-1">favorita</span> de tu mascota
+              </h1>
+              
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Cuidamos de ellos como si fueran nuestra propia familia. Servicios integrales de salud, belleza y diversión en un solo lugar.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                <Button size="lg" className="text-lg px-8 py-6 rounded-2xl bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 hover:-translate-y-1 transition-all">
+                  Agenda tu cita
+                </Button>
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-2xl border-2 border-primary/20 hover:border-primary text-primary hover:bg-primary/5 hover:-translate-y-1 transition-all">
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  WhatsApp
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex-1 relative">
+              <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white rotate-2 hover:rotate-0 transition-transform duration-500">
+                {/* Stock image: Happy vet with dog */}
+                <img 
+                  src="https://images.unsplash.com/photo-1623366302587-b38b1ddaefd9?q=80&w=1000&auto=format&fit=crop" 
+                  alt="Veterinarian hugging a dog" 
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              {/* Decorative blobs */}
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent rounded-full blur-2xl -z-10" />
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-2xl -z-10" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES SECTION */}
+      <section id="services" className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 className="text-4xl font-display font-bold text-foreground">Nuestros Servicios</h2>
+            <p className="text-lg text-muted-foreground">Todo lo que tu mascota necesita para una vida larga, saludable y feliz.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(services?.length ? services : defaultServices).map((service, idx) => (
+              <ServiceCard 
+                key={idx}
+                title={service.title}
+                description={service.description}
+                Icon={defaultServices.find(s => s.title === service.title)?.icon || Stethoscope}
+                colorClass={idx % 2 === 0 ? "bg-secondary/30" : "bg-accent/30"}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT US */}
+      <section id="about" className="py-24 bg-accent/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="order-2 md:order-1 relative">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-4 pt-12">
+                   {/* Stock image: Cat looking cute */}
+                  <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop" alt="Cat" className="rounded-3xl shadow-lg w-full h-64 object-cover" />
+                  <div className="bg-primary p-6 rounded-3xl text-white text-center shadow-lg">
+                    <span className="block text-4xl font-bold font-display mb-1">10+</span>
+                    <span className="text-sm opacity-90">Años de experiencia</span>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                   {/* Stock image: Dog running */}
+                  <img src="https://images.unsplash.com/photo-1534361960057-19889db9621e?w=500&auto=format&fit=crop" alt="Dog" className="rounded-3xl shadow-lg w-full h-48 object-cover" />
+                   {/* Stock image: Vet team */}
+                  <img src="https://images.unsplash.com/photo-1599443015574-be5fe8a05783?w=500&auto=format&fit=crop" alt="Team" className="rounded-3xl shadow-lg w-full h-64 object-cover" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="order-1 md:order-2 space-y-8">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-sm uppercase tracking-wide">
+                Sobre Nosotros
+              </div>
+              <h2 className="text-4xl font-display font-bold leading-tight">
+                Más que veterinarios, somos amantes de los animales
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                En Pawly Vet, entendemos que tu mascota es un miembro más de la familia. Nuestra historia comenzó con el deseo de crear un espacio donde la medicina veterinaria de alta calidad se encuentre con el trato cálido y humano.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Cada miembro de nuestro equipo ha sido seleccionado no solo por su excelencia profesional, sino por su capacidad de conectar con cada paciente peludo que entra por nuestra puerta.
+              </p>
+              
+              <div className="pt-4">
+                <div className="flex items-center gap-4 mb-6">
+                  {team?.slice(0, 3).map((member, i) => (
+                    <div key={i} className="flex items-center gap-3 bg-white p-2 pr-4 rounded-full shadow-sm border border-border/50">
+                      <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center overflow-hidden">
+                        {member.imageUrl ? (
+                           <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover" /> 
+                        ) : (
+                           <span className="font-bold text-accent-foreground">{member.name[0]}</span>
+                        )}
+                      </div>
+                      <div className="text-sm">
+                        <p className="font-bold leading-none">{member.name}</p>
+                        <p className="text-xs text-muted-foreground">{member.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HOTEL HIGHLIGHT */}
+      <section id="hotel" className="py-24 bg-primary text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="md:w-1/2 space-y-8">
+              <h2 className="text-4xl md:text-5xl font-display font-bold">Hotel Pawly 5 Estrellas ⭐</h2>
+              <p className="text-primary-foreground/90 text-xl leading-relaxed">
+                ¿Sales de viaje? Deja a tu mejor amigo en las mejores manos. Un espacio diseñado para que se sientan como en casa, con diversión garantizada.
+              </p>
+              
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {benefits.map((benefit, i) => (
+                  <li key={i} className="flex items-center gap-3 bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                    <div className="bg-white text-primary p-1 rounded-full">
+                      <PawPrint size={14} />
+                    </div>
+                    <span className="font-medium">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-bold px-8 py-6 rounded-2xl shadow-xl mt-6">
+                Reservar Hospedaje
+              </Button>
+            </div>
+            
+            <div className="md:w-1/2 relative">
+              <div className="bg-white/10 backdrop-blur-md p-2 rounded-[2rem] border border-white/20 rotate-3">
+                 {/* Stock image: Dog sleeping comfortably */}
+                <img 
+                  src="https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?q=80&w=800&auto=format&fit=crop" 
+                  alt="Dog sleeping comfortably" 
+                  className="rounded-[1.8rem] shadow-2xl"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SHOP PREVIEW */}
+      <section id="shop" className="py-24 bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-end mb-12">
+            <div className="space-y-2">
+              <h2 className="text-4xl font-display font-bold">Boutique & Alimentos</h2>
+              <p className="text-muted-foreground">Lo mejor para consentirlos</p>
+            </div>
+            <Button variant="outline" className="hidden sm:flex border-primary text-primary hover:bg-primary hover:text-white">
+              Ver todo el catálogo
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products && products.length > 0 ? (
+              products.map(product => <ProductCard key={product.id} product={product} />)
+            ) : (
+              // Mock products if empty
+              Array(4).fill(null).map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl p-4 animate-pulse">
+                  <div className="bg-muted w-full aspect-square rounded-xl mb-4"></div>
+                  <div className="h-4 bg-muted w-3/4 rounded mb-2"></div>
+                  <div className="h-4 bg-muted w-1/2 rounded"></div>
+                </div>
+              ))
+            )}
+          </div>
+          
+          <Button variant="outline" className="w-full mt-8 sm:hidden border-primary text-primary">
+            Ver todo el catálogo
+          </Button>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-display font-bold mb-16">Huellas Felices</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials?.length ? testimonials.map((t, i) => (
+              <div key={i} className="bg-background p-8 rounded-3xl relative">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground w-12 h-12 flex items-center justify-center rounded-full text-2xl shadow-sm">
+                  💬
+                </div>
+                <div className="flex justify-center gap-1 text-yellow-400 mb-4 mt-2">
+                  {[...Array(t.rating || 5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
+                </div>
+                <p className="text-muted-foreground italic mb-6">"{t.content}"</p>
+                <div className="font-bold text-lg">{t.clientName}</div>
+                <div className="text-sm text-primary font-medium">{t.petName && `Dueño de ${t.petName}`}</div>
+              </div>
+            )) : (
+               <div className="col-span-3 text-muted-foreground">Cargando opiniones...</div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT & FOOTER */}
+      <footer id="contact" className="bg-foreground text-background pt-20 pb-10 rounded-t-[3rem] mt-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-primary">
+                <PawPrint size={32} fill="currentColor" />
+                <span className="text-2xl font-bold font-display">Pawly Vet</span>
+              </div>
+              <p className="text-background/70 leading-relaxed">
+                Comprometidos con la salud y felicidad de tus mascotas. Un equipo profesional y lleno de amor esperándote.
+              </p>
+              <div className="flex gap-4">
+                 {/* Social icons placeholder */}
+                 <div className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary transition-colors flex items-center justify-center cursor-pointer">IG</div>
+                 <div className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary transition-colors flex items-center justify-center cursor-pointer">FB</div>
+                 <div className="w-10 h-10 rounded-full bg-white/10 hover:bg-primary transition-colors flex items-center justify-center cursor-pointer">TK</div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-6 text-primary">Contacto</h3>
+              <ul className="space-y-4 text-background/80">
+                <li className="flex items-start gap-3">
+                  <MapPin className="mt-1 shrink-0 text-primary" size={20} />
+                  <span>Av. Principal 123, Ciudad Mascota</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Phone className="shrink-0 text-primary" size={20} />
+                  <span>+1 234 567 890</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <MessageCircle className="shrink-0 text-primary" size={20} />
+                  <span>WhatsApp Directo</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-6 text-primary">Horarios</h3>
+              <ul className="space-y-4 text-background/80">
+                <li className="flex items-center gap-3">
+                  <Clock className="shrink-0 text-primary" size={20} />
+                  <div>
+                    <span className="block font-bold">Lunes - Viernes</span>
+                    <span className="text-sm">8:00 AM - 8:00 PM</span>
+                  </div>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Clock className="shrink-0 text-primary" size={20} />
+                  <div>
+                    <span className="block font-bold">Sábados</span>
+                    <span className="text-sm">9:00 AM - 6:00 PM</span>
+                  </div>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Clock className="shrink-0 text-primary" size={20} />
+                  <div>
+                    <span className="block font-bold">Domingos</span>
+                    <span className="text-sm">Solo Urgencias</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-6 text-primary">Ubicación</h3>
+              <div className="w-full h-48 bg-white/10 rounded-2xl flex items-center justify-center text-background/50">
+                Map Placeholder
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-8 text-center text-background/40 text-sm">
+            © 2024 Pawly Vet. Todos los derechos reservados. Diseñado con ❤️ para las mascotas.
+          </div>
+        </div>
+      </footer>
+
+      {/* Floating WhatsApp Button */}
+      <a 
+        href="https://wa.me/1234567890" 
+        target="_blank" 
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all z-50 flex items-center justify-center"
+      >
+        <MessageCircle size={32} fill="white" className="text-white" />
+      </a>
+    </div>
+  );
+}
