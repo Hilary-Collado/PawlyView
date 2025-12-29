@@ -7,9 +7,7 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Seed the database on startup
-  await storage.seed();
-
+  // Static-only API endpoints for compatibility with frontend hooks
   app.get(api.services.list.path, async (_req, res) => {
     const services = await storage.getServices();
     res.json(services);
