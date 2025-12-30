@@ -23,6 +23,7 @@ export function useProducts() {
       const data = await res.json();
       return data;
       // return api.products.list.responses[200].parse(await res.json());
+
     },
   });
 }
@@ -37,6 +38,7 @@ export function useTestimonials() {
       const data = await res.json();
       return data;
       // return api.testimonials.list.responses[200].parse(await res.json());
+
     },
   });
 }
