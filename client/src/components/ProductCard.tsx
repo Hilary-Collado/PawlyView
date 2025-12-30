@@ -1,8 +1,8 @@
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@shared/schema";
-
-export function ProductCard({ product }: { product: Product }) {
+ 
+export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 group">
       <div className="aspect-square bg-accent/30 relative overflow-hidden">

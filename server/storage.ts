@@ -1,6 +1,6 @@
 import { type Service, type Product, type Testimonial, type TeamMember } from "@shared/schema";
 
-export const staticData = {
+export const staticData = { 
   services: [
     { id: 1, title: "Veterinaria", description: "Consultas, vacunas y cirugías con amor.", icon: "Stethoscope", category: "vet" },
     { id: 2, title: "Peluquería", description: "Baños y cortes para que luzcan increíbles.", icon: "Scissors", category: "grooming" },
@@ -22,7 +22,7 @@ export const staticData = {
     { id: 1, name: "Dra. Ana López", role: "Veterinaria Principal", imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&auto=format&fit=crop&q=60" },
     { id: 2, name: "Pedro Ramírez", role: "Estilista Canino", imageUrl: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=500&auto=format&fit=crop&q=60" },
     { id: 3, name: "Sofía Martínez", role: "Asistente Veterinaria", imageUrl: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=500&auto=format&fit=crop&q=60" },
-  ],
+  ],  
 };
 
 export interface IStorage {

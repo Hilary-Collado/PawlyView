@@ -1,49 +1,50 @@
-import { z } from 'zod';
-import { services, products, testimonials, team } from './schema';
-
-export const errorSchemas = {
-  notFound: z.object({ message: z.string() }),
-  internal: z.object({ message: z.string() }),
-};
+import { z } from "zod";
+import {
+  productSchema,
+  serviceSchema,
+  testimonialSchema,
+  teamMemberSchema,
+} from "./schema";
 
 export const api = {
   services: {
     list: {
-      method: 'GET' as const,
-      path: '/api/services',
+      method: "GET" as const,
+      path: "/api/services",
       responses: {
-        200: z.array(z.custom<typeof services.$inferSelect>()),
+        200: z.array(serviceSchema),
       },
     },
   },
   products: {
     list: {
-      method: 'GET' as const,
-      path: '/api/products',
+      method: "GET" as const,
+      path: "/api/products",
       responses: {
-        200: z.array(z.custom<typeof products.$inferSelect>()),
+        200: z.array(productSchema),
       },
     },
   },
   testimonials: {
     list: {
-      method: 'GET' as const,
-      path: '/api/testimonials',
+      method: "GET" as const,
+      path: "/api/testimonials",
       responses: {
-        200: z.array(z.custom<typeof testimonials.$inferSelect>()),
+        200: z.array(testimonialSchema),
       },
     },
   },
   team: {
     list: {
-      method: 'GET' as const,
-      path: '/api/team',
+      method: "GET" as const,
+      path: "/api/team",
       responses: {
-        200: z.array(z.custom<typeof team.$inferSelect>()),
+        200: z.array(teamMemberSchema),
       },
     },
   },
 };
+
 
 export function buildUrl(path: string, params?: Record<string, string | number>): string {
   let url = path;

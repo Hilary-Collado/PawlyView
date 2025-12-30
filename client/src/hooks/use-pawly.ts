@@ -3,7 +3,7 @@ import { api } from "@shared/routes";
 
 // Hooks for Services
 export function useServices() {
-  return useQuery({
+  return useQuery({ 
     queryKey: [api.services.list.path],
     queryFn: async () => {
       const res = await fetch(api.services.list.path);
@@ -20,7 +20,9 @@ export function useProducts() {
     queryFn: async () => {
       const res = await fetch(api.products.list.path);
       if (!res.ok) throw new Error("Failed to fetch products");
-      return api.products.list.responses[200].parse(await res.json());
+      const data = await res.json();
+      return data;
+      // return api.products.list.responses[200].parse(await res.json());
     },
   });
 }
@@ -32,7 +34,9 @@ export function useTestimonials() {
     queryFn: async () => {
       const res = await fetch(api.testimonials.list.path);
       if (!res.ok) throw new Error("Failed to fetch testimonials");
-      return api.testimonials.list.responses[200].parse(await res.json());
+      const data = await res.json();
+      return data;
+      // return api.testimonials.list.responses[200].parse(await res.json());
     },
   });
 }
@@ -48,3 +52,4 @@ export function useTeam() {
     },
   });
 }
+
